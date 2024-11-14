@@ -1,0 +1,99 @@
+standard access-list blocking porn sites
+config t
+no access-list 2
+access-list 2 deny 192.169.173.81 0.0.255.255
+access-list 2 deny 45.60.24.10 0.0.0.255
+access-list 2 deny 50.6.160.47 .0.255.255
+access-list 2 deny 155.137.92.102 0.0.255.255
+access-list 2 deny 184.168.125.216 0.0.255.255
+access-list 2 permit ANY
+Int Gi 2
+ip access-group 2 in
+end
+
+BUKAS/surfall:
+config t
+Int Gi2
+No ip access-group 1 in
+end
+
+www.rtu.edu.ph 192.169.173.81
+www.cmu.edu.ph 45.60.24.10
+www.ccp.edu.ph 50.6.160.47
+www.feu.edu.ph 184.168.125.216
+www.ue.edu.ph 155.137.92.102
+
+
+config t
+No ip access-list standard NOCLASSMATE2
+ip access-list standard NOCLASSMATE2
+permit 10.51.0.0 0.0.255.255
+permit 10.61.0.0 0.0.255.255
+permit 10.71.0.0 0.0.255.255
+deny any
+Int Gi 0/0/1
+No ip access-group NOCLASSMATE2 in
+end
+
+
+
+
+config t
+NO ip access-list standard NOPORN1
+ip access-list standard NOPORN1
+DENY 66.254.0.0 0.0.255.255
+DENY 104.21.0.0 0.0.255.255
+DENY 68.235.0.0 0.0.255.255
+DENY 104.17.0.0 0.0.255.255
+DENY 88.208.0.0 0.0.255.255
+Permit Any
+Int Gi 2
+ ip access-group NOPORN1 in
+ end
+
+config t
+no ip access-list extended policy1
+ip access-list extended policy1
+Permit tcp any  host www.web8.com 80 log
+Permit tcp any  host www.web8.com 443 log
+Permit tcp any  host www.web9.com 22 log
+Permit tcp any  host www.web9.com 53 log
+INT gi 3
+ip access-group policy1 in
+do hw ip access-list policy1
+
+config t
+no ip access-list extended POLICY5
+ip access-list extended POLICY5
+Permit tcp any host www.web8.com eq 19 log
+Permit tcp any host www.web8.com eq 79 log
+Permit icmp any host www.web8.com eq 80 log
+Permit icmp any host www.web8.com eq 80 log
+Permit TCP any host www.web9.com eq 22 log
+Permit tcp any host www.web9.com eq 23 log
+Permit icmp any host www.web9.com 13 log
+Permit icmp any host www.web9.com 53 log
+Permit icmp any host www.web9.com 443 log
+Interface Gi 3
+ ip access-group POLICY5 in
+ do sh ip access-list POLICY
+
+POLICY 6:
+protect www.web8.com exactly like www.pornhub.com
+protect www.web8.com exactly like www.iyottube.com
+
+config t
+no ip access-list extended POLICY6
+ip access-list extended POLICY6
+Permit ip any host www.web9.com log
+Permit tcp any host www.web8.com eq 80 log
+Permit tcp any host www.web8.com eq 443 log
+Interface Gi 3
+ ip access-group POLICY6 in
+ do sh ip access-list POLICY6
+
+
+
+
+
+
