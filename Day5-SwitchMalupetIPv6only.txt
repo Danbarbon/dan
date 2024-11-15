@@ -338,7 +338,7 @@ spanning-tree Mode Rapid-pvst
 do sh spanning-tree vlan 1
 configure 802.1w/RapidSTP:
 
-TAAS: RootBridge: laspagin si Wonderwoman
+TAAS: RootBridge: laspagin si Wonderwoman/bilis labasan
 config t
 spanning-tree Mode Rapid-pvst
 spanning-tree BackBoneFast
@@ -358,10 +358,10 @@ end
 #sh int status err-disabled 
 TAAS: bounce/UP/down, bring BACK TO LIFE.
 config t
-int fa 0/3
+int fa 0/1
  shut
  no shut
-int fa 0/7
+int fa 0/3
  shut
  no shut
 end
@@ -378,13 +378,7 @@ vtp version 2
 exit
 
 a1/a2: access SW
-config t
-vtp domain ccna
-vtp password pass
-vtp mode client
-vtp version 1
-exit
-
+c
 
 step2: 
 create vlans:
